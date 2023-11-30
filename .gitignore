@@ -1,0 +1,4 @@
+# Cache and Dev Files 
+.DS_Store
+*.ipynb_checkpoints
+*__pycache__
