@@ -205,8 +205,11 @@ def push_log(log_filename):
     push_to_cloud(log)
 
 
-def push_to_cloud(log):
+def push_to_cloud(log, type="JupyterGPT"):
     url = "https://us-east-1.aws.data.mongodb-api.com/app/rest-api-vsfoo/endpoint/add_log?db=studies&collection=notebook-gpt"
+
+    if log["log_id"] == "default":
+        return
 
     help_data = {
         "body": {
@@ -214,7 +217,7 @@ def push_to_cloud(log):
             "log_id": log["log_id"],
             "machine_id": log["machine_id"],
             "course_id": log["course_id"],
-            "log_type": "JupyterGPT",
+            "log_type": type,
             "log": log,
         }
     }
@@ -226,7 +229,7 @@ def push_to_cloud(log):
 
 
 # Call this function each time a change happens
-def logger(base_filename, course_id, base_id):
+def logger(base_filename, course_id, base_id, model):
     src_path = os.path.realpath(base_filename)
     dir_path = os.path.dirname(src_path)
 
@@ -279,12 +282,14 @@ def logger(base_filename, course_id, base_id):
                         "time": str(datetime.datetime.now()),
                         "checkpoint": checkpoint,
                     },
-                    "diffs": [],
+                    "diffs": []
                 }
                 f.write(json.dumps(new))
+    if model != None:
+        model.refresh()
 
 
-def start(watch_file, course_id="NoCourseSpecified", base_id="", IRB_consent=True):
+def start(watch_file, course_id="NoCourseSpecified", base_id="", model=None, IRB_consent=True):
     if IRB_consent:
         watcher = Watcher(
             watch_file,
@@ -292,6 +297,7 @@ def start(watch_file, course_id="NoCourseSpecified", base_id="", IRB_consent=Tru
             base_filename=watch_file,
             course_id=course_id,
             base_id=base_id,
+            model=model
         )
         log_file = watch_file.split(".")[0] + "_log.json"
         pusher = Pusher(log_file, push_log, log_filename=log_file)

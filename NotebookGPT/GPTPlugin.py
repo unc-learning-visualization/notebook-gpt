@@ -1,16 +1,21 @@
 import NotebookGPT.OnlineLogger as OnlineLogger
-from .GPTUI import GPTUI
 import ipynbname
-import json
+from .GPTModel import GPTModel
+from .GPTView import GPTView
+from .GPTLoggerView import GPTLoggerView
 
 
-def GPTPlugin(unique_id="GPT-User", course_taken="GPT-Course", notebook_name=""):
+def GPTPlugin(unique_id="GPT-User", course_taken="GPT-Course", problem="", notebook_name="" ):
     if notebook_name == "":
         notebook_name = ipynbname.name() + ".ipynb"
     
     base_id = unique_id + "-"
     log_file = notebook_name.split('.ipynb')[0] + "_log.json"
-    OnlineLogger.start(notebook_name, course_taken, base_id)
-    UI = GPTUI(log_file)
-    UI.start()
+    model = GPTModel(log_file, problem)
+    OnlineLogger.start(notebook_name, course_taken, base_id, model=model)
+    view = GPTView(model)
+    gptLogger = GPTLoggerView(model)
+    model.addViewer(view)
+    model.addViewer(gptLogger)
+    view.displayWidget()
     

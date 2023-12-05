@@ -3,12 +3,9 @@
 class GPTAPI():
 
     @staticmethod
-    def sendToGPT(text: str):
-        print(text)
-        return {}
+    def sendToGPT(text: str, problem: str):
+        return str(text + problem), "sample"
     
     @staticmethod 
-    def sendHistoryToGPT(codeHistory: [str]):
-        for i in codeHistory:
-            print(i)
-        return {}
+    def sendHistoryToGPT(codeHistory: [str], problem: str):
+        return ".".join(codeHistory), "sample"
