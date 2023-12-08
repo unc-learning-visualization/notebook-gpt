@@ -70,7 +70,9 @@ class GPTLoggerView():
 
 
     def update(self, event: dict):
-        if event['event'] == "Free_GPT_Response":
-            self.transformEvent("Free Question", event['sent'], event['value'], event['problem'], event['raw_input'])
-        if event['event'] == "History_GPT_Response":
-            self.transformEvent("Code History Question", event['sent'], event['value'], event['problem'], event['raw_input'])
+        if event['event'] == "History_GPT":
+            self.transformEvent("Generate History Prompt", event['sent'], event['value'], event['problem'], event['raw_input'])
+        if event['event'] == "Problem_GPT":
+            self.transformEvent("Generate Problem Prompt", event['sent'], event['value'], event['problem'], event['raw_input'])
+        if event['event'] == "Sent_GPT":
+            self.transformEvent("Sent to GPT", event['sent'], event['value'], event['problem'], event['raw_input'])

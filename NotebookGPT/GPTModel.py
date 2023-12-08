@@ -33,26 +33,34 @@ class GPTModel():
         return self.getLog()['diffs']
     
     def sendToGPT(self, text: str) -> str:
-        gpt_response, sent = GPTAPI.sendToGPT(text, self.problem)
+        gpt_response = GPTAPI.sendToGPT(text)
         self.update({
-            "event":"Free_GPT_Response",
+            "event":"Sent_GPT",
             "value": gpt_response,
-            "sent": sent,
+            "sent": text,
             "raw_input": text,
             "problem": self.problem
         })
-        return gpt_response
     
-    def sendCodeHistoryToGPT(self):
-        gpt_response, sent = GPTAPI.sendHistoryToGPT(self.history, self.problem)
+    def generateHistoryPrompt(self):
+        response = GPTAPI.generateHistoryPrompt(self.history, self.problem)
         self.update({
-            "event":"History_GPT_Response",
-            "value": gpt_response,
-            "sent": sent,
+            "event":"History_GPT",
+            "value": response,
+            "sent": "",
             "raw_input": self.history,
             "problem": self.problem
         })
-        return gpt_response
+    
+    def generateProblemPrompt(self):
+        response = GPTAPI.generateProblemPrompt(self.problem)
+        self.update({
+            "event":"Problem_GPT",
+            "value": response,
+            "sent": "",
+            "raw_input": self.problem,
+            "problem": self.problem
+        })
     
     def getCodeHistory(self, max_size=5) -> [str]:
         diffs = self.getLogDiffs()

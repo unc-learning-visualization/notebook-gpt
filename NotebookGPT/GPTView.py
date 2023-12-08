@@ -56,21 +56,31 @@ class GPTView():
             disabled=False
         )
 
-        self.help = wg.Button(
+        self.code = wg.Button(
             description='',
             disabled=False,
             button_style='', # 'success', 'info', 'warning', 'danger' or ''
-            tooltip='Click to use your current code history to ask for help.',
+            tooltip='Click to fill your code history to send to ChatGPT.',
             layout=wg.Layout(width='10%'),
             icon='fa-code' # (FontAwesome names without the `fa-` prefix)
         )
-        self.help.on_click(self.helpFunction)
+        self.code.on_click(self.codeButton)
+
+        self.problem = wg.Button(
+            description='',
+            disabled=False,
+            button_style='', # 'success', 'info', 'warning', 'danger' or ''
+            tooltip='Click to fill the problem into GPT box with prompt.',
+            layout=wg.Layout(width='10%'),
+            icon='fa-question-circle' # (FontAwesome names without the `fa-` prefix)
+        )
+        self.problem.on_click(self.promptButton)
 
         self.send_gpt = wg.Button(
             description='',
             disabled=False,
             button_style='', # 'success', 'info', 'warning', 'danger' or ''
-            tooltip='Click to send your message to ChatGPT',
+            tooltip='Click to send your message to ChatGPT.',
             layout=wg.Layout(width='10%'),
             icon='fa-comments' # (FontAwesome names without the `fa-` prefix)
         )
@@ -80,23 +90,22 @@ class GPTView():
         self.box_1 = wg.HBox([self.current_code], layout=wg.Layout(width='100%'))
         self.box_2 = wg.HBox([self.gpt_insert, self.gpt_header])
         self.box_3 = wg.HBox([self.gpt_enter_code, self.gpt_response_code])
-        self.box_4 = wg.HBox([self.help, self.send_gpt])
+        self.box_4 = wg.HBox([self.code, self.problem, self.send_gpt])
 
     def displayWidget(self):
         display(self.box_0, self.box_1, self.box_2, self.box_3, self.box_4)
 
-    def helpFunction(self, click):
-        self.model.sendCodeHistoryToGPT()
+    def codeButton(self, click):
+        self.model.generateHistoryPrompt()
+
+    def promptButton(self, click):
+        self.model.generateProblemPrompt()
 
     def sendGPT(self, click):
         self.model.sendToGPT(self.gpt_enter_code.value)
 
     def update(self, event: dict):
-        if event['event'] == "Free_GPT_Response":
+        if event['event'] == "Sent_GPT":
             self.gpt_response_code.value = event['value']
-        if event['event'] == "History_GPT_Response":
-            self.gpt_response_code.value = event['value']
-        if event['event'] == "History_Response":
-            self.history = event['value']
-            if len(self.history) > 0:
-                self.current_code.value = self.history[0]
+        if event['event'] == "History_GPT" or event['event'] == "Problem_GPT":
+            self.gpt_enter_code.value = event['value']

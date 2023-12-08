@@ -2,3 +2,9 @@
 .DS_Store
 *.ipynb_checkpoints
 *__pycache__
+
+# Credential Files 
+.env
+
+# Logs 
+*.json
