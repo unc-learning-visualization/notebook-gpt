@@ -4,6 +4,7 @@
 *__pycache__
 dist
 *.egg-info
+deploy.sh
 
 # Credential Files 
 .env

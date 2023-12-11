@@ -6,7 +6,26 @@ This package creates a ChatGPT window inside a Jupyter Notebook and automaticall
 
 ## Usage
 
-See the [_Example Notebook.ipynb_](./Example%20Notebook.ipynb) for usage.
+Import the plugin as shown below:
+
+```python
+from notebook_gpt_plugin import GPTPlugin
+```
+
+The plugin can be run with no arguments.
+
+```python
+GPTPlugin()
+```
+
+The plugin can also be given arguments for the student being tracked, the course, and problem they are working.
+
+```python
+user_id = "UniqueUserID"
+course_id = "UniqueCourse"
+problem = "Put the problem they are solving here."
+GPTPlugin(user_id, course_id, problem)
+```
 
 ## Config
 
