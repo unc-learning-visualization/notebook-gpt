@@ -56,13 +56,23 @@ class GPTView():
             disabled=False
         )
 
-        self.code = wg.Button(
+        self.singleCodeButton = wg.Button(
             description='',
             disabled=False,
             button_style='', # 'success', 'info', 'warning', 'danger' or ''
             tooltip='Click to fill your code history to send to ChatGPT.',
             layout=wg.Layout(width='10%'),
             icon='fa-code' # (FontAwesome names without the `fa-` prefix)
+        )
+        self.singleCodeButton.on_click(self.singleCodeButtonClick)
+        
+        self.code = wg.Button(
+            description='',
+            disabled=False,
+            button_style='', # 'success', 'info', 'warning', 'danger' or ''
+            tooltip='Click to fill your code history to send to ChatGPT.',
+            layout=wg.Layout(width='10%'),
+            icon='fa-history' # (FontAwesome names without the `fa-` prefix)
         )
         self.code.on_click(self.codeButton)
 
@@ -90,10 +100,13 @@ class GPTView():
         self.box_1 = wg.HBox([self.current_code], layout=wg.Layout(width='100%'))
         self.box_2 = wg.HBox([self.gpt_insert, self.gpt_header])
         self.box_3 = wg.HBox([self.gpt_enter_code, self.gpt_response_code])
-        self.box_4 = wg.HBox([self.code, self.problem, self.send_gpt])
+        self.box_4 = wg.HBox([self.singleCodeButton, self.code, self.problem, self.send_gpt])
 
     def displayWidget(self):
         display(self.box_0, self.box_1, self.box_2, self.box_3, self.box_4)
+
+    def singleCodeButtonClick(self, click):
+        self.model.generateCodePrompt()
 
     def codeButton(self, click):
         self.model.generateHistoryPrompt()
@@ -107,7 +120,7 @@ class GPTView():
     def update(self, event: dict):
         if event['event'] == "Sent_GPT":
             self.gpt_response_code.value = event['value']
-        if event['event'] == "History_GPT" or event['event'] == "Problem_GPT":
+        if event['event'] == "History_GPT" or event['event'] == "Problem_GPT" or event['event'] == "Single_Code_GPT":
             self.gpt_enter_code.value = event['value']
         if event['event'] == "Loading":
             self.gpt_response_code.value = event['value']

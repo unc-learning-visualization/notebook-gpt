@@ -74,5 +74,7 @@ class GPTLoggerView():
             self.transformEvent("Generate History Prompt", event['sent'], event['value'], event['problem'], event['raw_input'])
         if event['event'] == "Problem_GPT":
             self.transformEvent("Generate Problem Prompt", event['sent'], event['value'], event['problem'], event['raw_input'])
+        if event['event'] == "Single_Code_GPT":
+            self.transformEvent("Generate Code Prompt", event['sent'], event['value'], event['problem'], event['raw_input'])
         if event['event'] == "Sent_GPT":
             self.transformEvent("Sent to GPT", event['sent'], event['value'], event['problem'], event['raw_input'])

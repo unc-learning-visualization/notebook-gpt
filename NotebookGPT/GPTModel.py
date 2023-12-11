@@ -45,6 +45,20 @@ class GPTModel():
             "raw_input": text,
             "problem": self.problem
         })
+
+    def generateCodePrompt(self):
+        to_pass = ""
+        if len(self.history) > 0:
+            to_pass = self.history[0]
+        
+        response = GPTAPI.generateSinglePrompt(to_pass, self.problem)
+        self.update({
+            "event":"Single_Code_GPT",
+            "value": response,
+            "sent": "",
+            "raw_input": to_pass,
+            "problem": self.problem
+        })
     
     def generateHistoryPrompt(self):
         response = GPTAPI.generateHistoryPrompt(self.history, self.problem)
