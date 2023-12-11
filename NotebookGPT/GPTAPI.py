@@ -3,6 +3,7 @@
 import requests
 import json
 import os
+import re
 from dotenv import load_dotenv
 
 class GPTAPI():
@@ -35,12 +36,7 @@ class GPTAPI():
 
     @staticmethod
     def cleanText(text: str):
-        to_return = text
-        for i in range(len(text),1,-1):
-            build = ""
-            for j in range(0,i):
-                build += "\n"
-            to_return = to_return.replace(build, "\n")
+        to_return = re.sub(r"\n[\t' ']*\n", "\n", text)
         if to_return[-1] == "\n":
             to_return = to_return[:-1]
         return to_return
@@ -53,7 +49,6 @@ class GPTAPI():
         url = "https://us-east-1.aws.data.mongodb-api.com/app/rest-api-vsfoo/endpoint/gpt_request?secret=" + os.getenv("API_SECRET")
 
         text = GPTAPI.cleanText(text)
-        print(text)
         payload = json.dumps({
           "text": text
         })
@@ -63,15 +58,14 @@ class GPTAPI():
         
         response = requests.request("POST", url, headers=headers, data=payload)
         if response.status_code != 200:
-            print(response.json())
-            return response.json()['message']
+            return response.json()['message'], text
 
         parse = response.json()
 
         if 'choices' in parse and len(parse['choices']) != 1: 
             return "Chat does not currently support choices. Please ask a question that will likely give a single answer."
 
-        return GPTAPI.handleChoice(parse['choices'][0])
+        return GPTAPI.handleChoice(parse['choices'][0]), text
     
     @staticmethod
     def generateHistoryPrompt(history: [str], problem: str) -> str:
@@ -87,7 +81,6 @@ class GPTAPI():
         base += "What advice would you give based on the following history:\n"
         for i in history:
             base += i
-        
         return base
     
     @staticmethod

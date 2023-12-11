@@ -109,6 +109,9 @@ class GPTView():
             self.gpt_response_code.value = event['value']
         if event['event'] == "History_GPT" or event['event'] == "Problem_GPT":
             self.gpt_enter_code.value = event['value']
+        if event['event'] == "Loading":
+            self.gpt_response_code.value = event['value']
         if event['event'] == "History_Response":
             if len(event['value']) > 0:
                 self.current_code.value = event['value'][0]
+        

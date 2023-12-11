@@ -33,11 +33,15 @@ class GPTModel():
         return self.getLog()['diffs']
     
     def sendToGPT(self, text: str) -> str:
-        gpt_response = GPTAPI.sendToGPT(text)
+        self.update({
+            "event":"Loading",
+            "value": "Waiting for ChatGPT to respond...",
+        })
+        gpt_response, parsed = GPTAPI.sendToGPT(text)
         self.update({
             "event":"Sent_GPT",
             "value": gpt_response,
-            "sent": text,
+            "sent": parsed,
             "raw_input": text,
             "problem": self.problem
         })
@@ -131,10 +135,10 @@ class GPTModel():
 
     @staticmethod
     def __buildCodeString(source_array: [str], current_string):
-        current_string += "Code: \n"
+        current_string += "Code: \n```\n"
         for i in source_array:
             current_string += i 
-        return current_string + '\n'
+        return current_string + '\n```\n'
     
     @staticmethod
     def __buildStdOutString(current, new):
