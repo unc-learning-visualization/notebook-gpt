@@ -1,6 +1,6 @@
 [project]
 name = "notebook_gpt_plugin"
-version = "1.0.2"
+version = "1.0.3"
 authors = [
   { name="Samuel George", email="sdgeorge@cs.unc.edu" },
 ]

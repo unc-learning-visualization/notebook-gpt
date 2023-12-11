@@ -2,7 +2,7 @@ import os
 import json
 import datetime
 from .GPTModel import GPTModel
-import NotebookGPT.OnlineLogger as OnlineLogger
+from .OnlineLogger import push_to_cloud
 
 class GPTLoggerView():
 
@@ -55,7 +55,7 @@ class GPTLoggerView():
             old = self.updateMetadata(old)
 
         self.writeLog(old)
-        OnlineLogger.push_to_cloud(old, "JupyterGPTInteractions")
+        push_to_cloud(old, "JupyterGPTInteractions")
 
         
     def transformEvent(self, type, sent, response, problem, raw_input):
