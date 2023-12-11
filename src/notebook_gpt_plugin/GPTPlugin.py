@@ -1,4 +1,4 @@
-import NotebookGPT.OnlineLogger as OnlineLogger
+from .OnlineLogger import start
 import ipynbname
 from .GPTModel import GPTModel
 from .GPTView import GPTView
@@ -12,7 +12,7 @@ def GPTPlugin(unique_id="GPT-User", course_taken="GPT-Course", problem="", noteb
     base_id = unique_id + "-"
     log_file = notebook_name.split('.ipynb')[0] + "_log.json"
     model = GPTModel(log_file, problem)
-    OnlineLogger.start(notebook_name, course_taken, base_id, model=model)
+    start(notebook_name, course_taken, base_id, model=model)
     view = GPTView(model)
     gptLogger = GPTLoggerView(model)
     model.addViewer(view)
