@@ -1,0 +1,22 @@
+[project]
+name = "notebook_gpt_plugin"
+version = "1.0.0"
+authors = [
+  { name="Samuel George", email="sdgeorge@cs.unc.edu" },
+]
+description = "A package for using ChatGPT in a Jupyter Notebook"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://github.com/unc-learning-visualization/notebook-gpt-plugin"
+Issues = "https://github.com/unc-learning-visualization/notebook-gpt-plugin/issues"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
