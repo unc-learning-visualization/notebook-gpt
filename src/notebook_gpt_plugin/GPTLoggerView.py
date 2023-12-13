@@ -78,3 +78,6 @@ class GPTLoggerView():
             self.transformEvent("Generate Code Prompt", event['sent'], event['value'], event['problem'], event['raw_input'])
         if event['event'] == "Sent_GPT":
             self.transformEvent("Sent to GPT", event['sent'], event['value'], event['problem'], event['raw_input'])
+        if event['event'] == "Student_Feedback": 
+            self.transformEvent("Student GPT Response Feedback", event['sent'], event['value'], event['problem'], event['raw_input'])
+

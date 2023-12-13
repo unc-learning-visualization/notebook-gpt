@@ -45,6 +45,9 @@ class GPTModel():
             "raw_input": text,
             "problem": self.problem
         })
+        self.update({
+            "event":"Enable_Feedback",
+        })
 
     def generateCodePrompt(self):
         to_pass = ""
@@ -99,6 +102,15 @@ class GPTModel():
             "value": history
         })
         return history
+    
+    def giveFeedback(self, is_positive, sent, response):
+        self.update({
+            "event":"Student_Feedback",
+            "value": response,
+            "sent": sent,
+            "raw_input": is_positive, 
+            "problem": self.problem
+        })
     
     @staticmethod
     def __OrderDiffs(correctOrder, keeperDict, unOrderedArray):
