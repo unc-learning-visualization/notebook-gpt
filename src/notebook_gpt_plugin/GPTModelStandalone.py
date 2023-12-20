@@ -46,6 +46,7 @@ class GPTModelStandalone():
         self.update({
             "event":"Enable_Feedback",
         })
+        return gpt_response
 
     def generateCodePrompt(self, to_pass: str):
         response = GPTAPI.generateSinglePrompt(to_pass, self.problem)
