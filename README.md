@@ -4,6 +4,14 @@
 
 This package creates a ChatGPT window inside a Jupyter Notebook and automatically creates a code history of using ChatGPT and the notebook.
 
+## Install
+
+Run the following to install the plugin.
+
+```sh
+pip3 install -i https://test.pypi.org/simple/ notebook-gpt-plugin --upgrade
+```
+
 ## Usage
 
 Import the plugin as shown below:
