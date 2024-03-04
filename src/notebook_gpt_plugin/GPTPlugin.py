@@ -5,7 +5,11 @@ from .GPTView import GPTView
 from .GPTLoggerView import GPTLoggerView
 
 
-def GPTPlugin(unique_id="GPT-User", course_taken="GPT-Course", problem="", notebook_name="" ):
+def GPTPlugin(unique_id="GPT-User", course_taken="GPT-Course", problem="", notebook_name="", consent=True ):
+    if not consent:
+        print("You must allow logging to use this plugin!")
+        return
+    
     if notebook_name == "":
         notebook_name = ipynbname.name() + ".ipynb"
     
