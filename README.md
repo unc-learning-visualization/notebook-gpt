@@ -1,4 +1,4 @@
-# notebook-gpt-plugin
+# notebook-gpt
 
 ## Overview
 
@@ -6,10 +6,16 @@ This package creates a ChatGPT window inside a Jupyter Notebook and automaticall
 
 ## Install
 
+Run the following to install all dependencies.
+
+```sh
+pip3 install jupyter ipynbname requests python-dotenv zipfile36 pathlib
+```
+
 Run the following to install the plugin.
 
 ```sh
-pip3 install -i https://test.pypi.org/simple/ notebook-gpt-plugin --upgrade
+pip3 install -i https://test.pypi.org/simple/ notebook-gpt --upgrade
 ```
 
 ## Usage
@@ -17,7 +23,7 @@ pip3 install -i https://test.pypi.org/simple/ notebook-gpt-plugin --upgrade
 Import the plugin as shown below:
 
 ```python
-from notebook_gpt_plugin import GPTPlugin
+from notebook_gpt import GPTPlugin
 ```
 
 The plugin can be run with no arguments.
